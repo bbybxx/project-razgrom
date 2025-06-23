@@ -126,6 +126,8 @@ app.get('/register', (req, res) => {
 app.post('/register', (req, res) => {
   const { username, password } = req.body;
   
+  console.log('Registration attempt:', { username, password: '***' });
+  
   if (!username || !password) {
     return res.render('register', { error: 'Все поля обязательны!' });
   }
@@ -136,9 +138,12 @@ app.post('/register', (req, res) => {
     return res.render('register', { error: 'Такой боец уже существует!' });
   }
 
+  const hashedPassword = hashPassword(password);
+  console.log('Creating user with hashed password:', hashedPassword);
+
   users[username] = {
     username: username,
-    password: hashPassword(password),
+    password: hashedPassword,
     fightName: '',
     bio: '',
     photo: '',
@@ -148,6 +153,7 @@ app.post('/register', (req, res) => {
   };
 
   writeJSONFile('data/users.json', users);
+  console.log('User registered successfully:', username);
   res.redirect('/login');
 });
 
@@ -160,10 +166,28 @@ app.post('/login', (req, res) => {
   const { username, password } = req.body;
   const users = readJSONFile('data/users.json');
   
-  if (users[username] && users[username].password === hashPassword(password)) {
-    req.session.user = users[username];
-    res.redirect('/dashboard');
+  console.log('Login attempt:', { username, password: '***' });
+  console.log('User exists:', !!users[username]);
+  
+  if (users[username]) {
+    const inputPasswordHash = hashPassword(password);
+    const storedPasswordHash = users[username].password;
+    console.log('Password hashes:', { 
+      input: inputPasswordHash, 
+      stored: storedPasswordHash,
+      match: inputPasswordHash === storedPasswordHash 
+    });
+    
+    if (storedPasswordHash === inputPasswordHash) {
+      req.session.user = users[username];
+      console.log('Login successful for:', username);
+      res.redirect('/dashboard');
+    } else {
+      console.log('Password mismatch for:', username);
+      res.render('login', { error: 'Неверные данные для входа!' });
+    }
   } else {
+    console.log('User not found:', username);
     res.render('login', { error: 'Неверные данные для входа!' });
   }
 });
