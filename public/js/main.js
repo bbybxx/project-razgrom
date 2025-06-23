@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     initMobileSidebar();
+    initMobileNavigation();
 });
 
 // Глитч эффекты
@@ -724,21 +725,39 @@ function initPWA() {
 // Инициализация мобильного сайдбара
 function initMobileSidebar() {
     console.log('Initializing mobile sidebar...');
+    console.log('Current page:', window.location.pathname);
+    
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const sidebar = document.getElementById('mobile-sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     
-    console.log('Elements found:', { menuToggle, sidebar, overlay });
+    console.log('Elements found:', { 
+        menuToggle: !!menuToggle, 
+        sidebar: !!sidebar, 
+        overlay: !!overlay 
+    });
     
-    if (!menuToggle || !sidebar || !overlay) {
-        console.error('Sidebar elements not found!');
+    if (!menuToggle) {
+        console.error('Mobile menu toggle not found!');
+        return;
+    }
+    
+    if (!sidebar) {
+        console.error('Mobile sidebar not found!');
+        return;
+    }
+    
+    if (!overlay) {
+        console.error('Sidebar overlay not found!');
         return;
     }
     
     console.log('Setting up sidebar events...');
     
     // Открытие сайдбара
-    menuToggle.addEventListener('click', function() {
+    menuToggle.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
         console.log('Menu toggle clicked');
         sidebar.classList.add('open');
         overlay.classList.add('active');
@@ -746,21 +765,30 @@ function initMobileSidebar() {
     });
     
     // Закрытие сайдбара при клике на overlay
-    overlay.addEventListener('click', function() {
+    overlay.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log('Overlay clicked');
         closeSidebar();
     });
     
     // Закрытие сайдбара при swipe влево
     let startX = 0;
+    let startY = 0;
+    
     sidebar.addEventListener('touchstart', function(e) {
         startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
     });
     
     sidebar.addEventListener('touchmove', function(e) {
         const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
         const diffX = startX - currentX;
+        const diffY = Math.abs(startY - currentY);
         
-        if (diffX > 50) { // Swipe влево
+        // Только горизонтальный swipe
+        if (diffX > 50 && diffY < 100) {
             closeSidebar();
         }
     });
@@ -773,6 +801,7 @@ function initMobileSidebar() {
     });
     
     function closeSidebar() {
+        console.log('Closing sidebar');
         sidebar.classList.remove('open');
         overlay.classList.remove('active');
         document.body.style.overflow = ''; // Возвращаем скролл
@@ -782,13 +811,56 @@ function initMobileSidebar() {
     const sidebarLinks = sidebar.querySelectorAll('a');
     sidebarLinks.forEach(link => {
         link.addEventListener('click', function() {
+            console.log('Sidebar link clicked:', this.href);
             // Небольшая задержка для плавности
             setTimeout(() => {
                 closeSidebar();
             }, 200);
         });
     });
+    
+    console.log('Mobile sidebar initialized successfully!');
 }
 
 // Инициализация PWA
 document.addEventListener('DOMContentLoaded', initPWA);
+
+// Инициализация мобильной навигации
+function initMobileNavigation() {
+    const navMenus = document.querySelectorAll('.nav-menu');
+    
+    navMenus.forEach(navMenu => {
+        const navContainer = navMenu.parentElement;
+        
+        // Создаем кнопку для показа/скрытия меню
+        const toggleButton = document.createElement('button');
+        toggleButton.className = 'mobile-nav-toggle';
+        toggleButton.textContent = 'МЕНЮ';
+        toggleButton.setAttribute('aria-label', 'Показать/скрыть меню');
+        
+        // Вставляем кнопку перед меню
+        navContainer.insertBefore(toggleButton, navMenu);
+        
+        // Обработчик клика
+        toggleButton.addEventListener('click', function() {
+            const isVisible = navMenu.classList.contains('mobile-show');
+            
+            if (isVisible) {
+                navMenu.classList.remove('mobile-show');
+                toggleButton.classList.remove('active');
+            } else {
+                navMenu.classList.add('mobile-show');
+                toggleButton.classList.add('active');
+            }
+        });
+        
+        // Скрываем меню при клике на ссылку
+        const navLinks = navMenu.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', function() {
+                navMenu.classList.remove('mobile-show');
+                toggleButton.classList.remove('active');
+            });
+        });
+    });
+}

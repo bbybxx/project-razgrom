@@ -7,38 +7,55 @@
     <div class="sidebar-header">
         <h2 class="sidebar-logo">РАЗГРОМ</h2>
         <p class="sidebar-subtitle">Первое правило - никому не рассказывать</p>
-    </div>        <div class="sidebar-nav">
-            <a href="/dashboard" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">🏠</span>ЦЕНТР УПРАВЛЕНИЯ
-            </a>
-            <a href="/profile/<%= user.username %>" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">👤</span>ПРОФИЛЬ
-            </a>
-            <a href="/journal" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">💬</span>ОБЩИЙ ЧАТ
-            </a>
-            <a href="/rating" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">🏆</span>РЕЙТИНГ
-            </a>
-            <a href="/fun" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">🎮</span>РАЗВЛЕЧЕНИЯ
-            </a>
-            <a href="/chronicle" class="sidebar-nav-item">
-                <span class="sidebar-nav-icon">📚</span>ИСТОРИЯ
-            </a>
-            <% if (user.isAdmin) { %>
-                <a href="/admin" class="sidebar-nav-item" style="border-left: 3px solid #ff4444;">
-                    <span class="sidebar-nav-icon">🔧</span>АДМИН ПАНЕЛЬ
+    </div>    <div class="sidebar-nav">
+            <% if (typeof user !== 'undefined' && user) { %>
+                <a href="/dashboard" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">🏠</span>ЦЕНТР УПРАВЛЕНИЯ
+                </a>
+                <a href="/profile/<%= user.username %>" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">👤</span>ПРОФИЛЬ
+                </a>
+                <a href="/journal" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">💬</span>ОБЩИЙ ЧАТ
+                </a>
+                <a href="/rating" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">🏆</span>РЕЙТИНГ
+                </a>
+                <a href="/fun" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">🎮</span>РАЗВЛЕЧЕНИЯ
+                </a>
+                <a href="/chronicle" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">📚</span>ИСТОРИЯ
+                </a>
+                <% if (user.isAdmin) { %>
+                    <a href="/admin" class="sidebar-nav-item" style="border-left: 3px solid #ff4444;">
+                        <span class="sidebar-nav-icon">🔧</span>АДМИН ПАНЕЛЬ
+                    </a>
+                <% } %>
+            <% } else { %>
+                <a href="/" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">🏠</span>ГЛАВНАЯ
+                </a>
+                <a href="/login" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">🔑</span>ВОЙТИ
+                </a>
+                <a href="/register" class="sidebar-nav-item">
+                    <span class="sidebar-nav-icon">📝</span>РЕГИСТРАЦИЯ
                 </a>
             <% } %>
-        </div>
-    <div class="sidebar-user-info">
-        <p class="sidebar-username"><%= user.username %></p>
-        <% if (user.fightName) { %>
-            <p class="sidebar-role">aka "<%= user.fightName %>"</p>
+        </div>    <div class="sidebar-user-info">
+        <% if (typeof user !== 'undefined' && user) { %>
+            <p class="sidebar-username"><%= user.username %></p>
+            <% if (user.fightName) { %>
+                <p class="sidebar-role">aka "<%= user.fightName %>"</p>
+            <% } else { %>
+                <p class="sidebar-role">Новый боец</p>
+            <% } %>
+            <a href="/logout" class="sidebar-logout">ВЫХОД</a>
         <% } else { %>
-            <p class="sidebar-role">Новый боец</p>
+            <p class="sidebar-username">Гость</p>
+            <p class="sidebar-role">Хочешь войти в элиту?</p>
+            <a href="/login" class="sidebar-logout">ВОЙТИ</a>
         <% } %>
-        <a href="/logout" class="sidebar-logout">ВЫХОД</a>
     </div>
 </nav>

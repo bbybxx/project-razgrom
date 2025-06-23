@@ -1932,24 +1932,40 @@ body {
     top: 20px;
     left: 20px;
     z-index: 1001;
-    background: rgba(255, 68, 68, 0.9);
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
+    background: linear-gradient(135deg, #ff4444, #cc3333);
+    border: 2px solid #ff6666;
+    border-radius: 10px;
+    padding: 14px;
     color: #fff;
-    font-size: 18px;
+    font-size: 20px;
+    font-weight: bold;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(255, 68, 68, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
     transition: all 0.3s ease;
+    animation: pulse-glow 3s ease-in-out infinite;
+}
+
+@keyframes pulse-glow {
+    0%, 100% { 
+        box-shadow: 0 6px 20px rgba(255, 68, 68, 0.4);
+        transform: scale(1);
+    }
+    50% { 
+        box-shadow: 0 8px 25px rgba(255, 68, 68, 0.6);
+        transform: scale(1.02);
+    }
 }
 
 .mobile-menu-toggle:hover {
-    background: rgba(255, 68, 68, 1);
-    transform: scale(1.05);
+    background: linear-gradient(135deg, #ff6666, #ff4444);
+    transform: scale(1.1);
+    box-shadow: 0 8px 25px rgba(255, 68, 68, 0.7);
+    animation: none;
 }
 
 .mobile-menu-toggle:active {
     transform: scale(0.95);
+    box-shadow: 0 4px 15px rgba(255, 68, 68, 0.5);
 }
 
 .sidebar {
@@ -2114,354 +2130,511 @@ body {
     }
 }
 
-/* Анимация глитча для сайдбара */
-@keyframes sidebar-glitch {
-    0% { transform: translateX(0); }
-    10% { transform: translateX(-2px); }
-    20% { transform: translateX(2px); }
-    30% { transform: translateX(-2px); }
-    40% { transform: translateX(2px); }
-    50% { transform: translateX(0); }
-    100% { transform: translateX(0); }
-}
+/* =========================
+   УЛУЧШЕННАЯ МОБИЛЬНАЯ АДАПТИВНОСТЬ
+   ========================= */
 
-.sidebar:hover {
-    animation: sidebar-glitch 0.6s ease-in-out;
-}
-
-/* Адаптивность */
+/* Мобильные стили для главной страницы */
 @media (max-width: 768px) {
-    body {
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    
-    .container {
-        padding: 0 15px;
-        max-width: 100%;
-    }
-    
-    /* Заголовки */
-    .glitch-text {
-        font-size: 2rem;
-        letter-spacing: 1px;
+    /* Основные контейнеры */
+    .main-header {
+        padding: 20px 0;
         text-align: center;
     }
     
-    h1 {
-        font-size: 1.8rem;
-        margin: 15px 0;
+    .main-header .glitch-text {
+        font-size: 2.2rem;
+        line-height: 1.1;
+        margin-bottom: 10px;
+        word-break: break-word;
     }
     
-    h2 {
-        font-size: 1.4rem;
-        margin: 12px 0;
+    .main-header .subtitle {
+        font-size: 0.9rem;
+        padding: 0 10px;
+        word-break: break-word;
+        line-height: 1.3;
     }
     
-    h3 {
-        font-size: 1.2rem;
-        margin: 10px 0;
+    /* Секция приветствия */
+    .welcome-section {
+        padding: 20px 0;
     }
     
-    /* Навигация */
-    .nav-links {
-        flex-direction: column;
-        gap: 8px;
-        text-align: center;
-    }
-    
-    .nav-links a {
-        padding: 12px 15px;
-        font-size: 14px;
-        border-radius: 5px;
-        background: rgba(255, 68, 68, 0.1);
-        margin: 2px 0;
-    }
-    
-    /* Кнопки */
-    .btn {
-        width: 100%;
-        padding: 12px 15px;
-        font-size: 14px;
-        margin: 8px 0;
-        min-height: 48px; /* Для удобного нажатия */
-    }
-    
-    .action-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .action-buttons .btn {
-        display: block;
-        margin: 5px 0;
-        text-align: center;
-    }
-    
-    /* Формы */
-    .form-group {
-        margin-bottom: 15px;
-    }
-    
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-        width: 100%;
-        padding: 12px;
-        font-size: 16px; /* Предотвращает зум на iOS */
-        border-radius: 5px;
-    }
-    
-    .form-group textarea {
-        min-height: 120px;
-        resize: vertical;
-    }
-    
-    /* Карточки */
-    .card, .message-card, .user-card {
-        margin: 10px 0;
+    .quote-box {
+        margin: 20px 0;
         padding: 15px;
         border-radius: 8px;
     }
     
-    .stats-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .stat-card {
-        text-align: center;
-        padding: 20px 15px;
-    }
-    
-    /* Профиль */
-    .profile-header {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-    
-    .profile-photo {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
-    }
-    
-    .profile-info h2 {
-        font-size: 1.3rem;
-    }
-    
-    .achievement-form {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .achievement-form input {
-        margin-bottom: 10px;
-    }
-    
-    /* Чат/Журнал */
-    .message-form {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .message-form input {
-        margin-bottom: 10px;
-    }
-    
-    .message-card {
-        padding: 12px;
-        margin: 8px 0;
-    }
-    
-    .message-author {
-        font-size: 0.9rem;
-    }
-    
-    .message-time {
-        font-size: 0.8rem;
-    }
-    
-    /* Развлечения */
-    .fun-grid {
-        grid-template-columns: 1fr;
-        gap: 15px;
-    }
-    
-    .fun-card {
-        padding: 15px;
-    }
-    
-    .cipher-buttons {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .cipher-buttons .btn {
-        width: 100%;
-    }
-    
-    /* Генераторы */
-    .generator-result {
-        padding: 15px;
-        margin: 15px 0;
-        font-size: 14px;
-        line-height: 1.4;
-    }
-    
-    #chaos-display {
-        text-align: center;
-        padding: 20px 10px;
-    }
-    
-    #chaos-number {
-        font-size: 2.5rem;
-        margin: 10px 0;
-    }
-    
-    /* Рейтинг */
-    .rating-table {
-        display: block;
-        overflow-x: auto;
-        white-space: nowrap;
-    }
-    
-    .rating-table table {
-        width: 100%;
-        min-width: 300px;
-    }
-    
-    .rating-table th,
-    .rating-table td {
-        padding: 8px 4px;
-        font-size: 12px;
-    }
-    
-    /* Хроника */
-    .timeline {
-        padding-left: 15px;
-    }
-    
-    .timeline-item {
-        padding: 12px;
-        margin: 10px 0;
-    }
-    
-    .timeline-item h4 {
-        font-size: 1rem;
-    }
-    
-    .timeline-item .date {
-        font-size: 0.8rem;
-    }
-    
-    /* Цитаты */
-    .quote-display {
-        padding: 20px 15px;
-        text-align: center;
-    }
-    
-    .quote-text {
+    .quote {
         font-size: 1rem;
         line-height: 1.4;
-        margin-bottom: 15px;
+        margin-bottom: 10px;
     }
     
     .quote-author {
         font-size: 0.9rem;
     }
     
-    /* Исправления для очень маленьких экранов */
-    @media (max-width: 480px) {
-        .glitch-text {
-            font-size: 1.5rem;
-            letter-spacing: 0.5px;
-        }
-        
-        .container {
-            padding: 0 10px;
-        }
-        
-        .card, .message-card, .fun-card {
-            padding: 12px;
-        }
-        
-        .btn {
-            padding: 10px 12px;
-            font-size: 13px;
-        }
-        
-        .nav-links a {
-            padding: 10px 12px;
-            font-size: 13px;
-        }
-        
-        #chaos-number {
-            font-size: 2rem;
-        }
-        
-        .stats-grid .stat-card {
-            padding: 15px 10px;
-        }
-        
-        .profile-photo {
-            width: 100px;
-            height: 100px;
-        }
+    .description {
+        text-align: center;
+        margin: 20px 0;
+    }
+    
+    .description p {
+        margin: 10px 0;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    /* Кнопки действий */
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 25px 0;
+    }
+    
+    .action-buttons .btn {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1rem;
+        min-height: 50px;
+        border-radius: 8px;
+        text-align: center;
+        box-sizing: border-box;
+    }
+    
+    .user-greeting {
+        text-align: center;
+        margin-top: 15px;
+        font-size: 1rem;
+        padding: 10px;
+        background: rgba(255, 68, 68, 0.1);
+        border-radius: 8px;
+        border: 1px solid rgba(255, 68, 68, 0.3);
+    }
+    
+    /* Секция загадки */
+    .mystery-section {
+        margin-top: 30px;
+    }
+    
+    .mystery-box {
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+    }
+    
+    .mystery-box h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        color: #ff4444;
+    }
+    
+    .mystery-box p {
+        margin: 12px 0;
+        font-size: 1rem;
+        line-height: 1.4;
+    }
+    
+    .warning {
+        margin: 20px 0;
+        padding: 15px;
+        font-size: 1rem;
+        border-radius: 8px;
+        animation: pulse 2s infinite;
     }
 }
 
-/* Ландшафтная ориентация на мобильных */
-@media (max-width: 768px) and (orientation: landscape) {
-    .glitch-text {
+/* Экстра-мобильные устройства */
+@media (max-width: 480px) {
+    .main-header .glitch-text {
         font-size: 1.8rem;
     }
     
-    .nav-links {
-        flex-direction: row;
-        flex-wrap: wrap;
+    .main-header .subtitle {
+        font-size: 0.8rem;
+        padding: 0 5px;
+    }
+    
+    .quote-box {
+        margin: 15px 0;
+        padding: 12px;
+    }
+    
+    .quote {
+        font-size: 0.9rem;
+    }
+    
+    .description p {
+        font-size: 0.9rem;
+    }
+    
+    .action-buttons .btn {
+        padding: 12px 15px;
+        font-size: 0.9rem;
+        min-height: 48px;
+    }
+    
+    .mystery-box {
+        padding: 15px;
+    }
+    
+    .mystery-box h3 {
+        font-size: 1.1rem;
+    }
+    
+    .mystery-box p {
+        font-size: 0.9rem;
+    }
+}
+
+/* Мобильные стили для профиля */
+@media (max-width: 768px) {
+    .profile-header {
+        padding: 15px 0;
+        text-align: center;
+    }
+    
+    .profile-header h1 {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        word-break: break-word;
+    }
+    
+    .profile-main {
+        padding: 0;
+    }
+    
+    .profile-layout {
+        display: block;
+        grid-template-columns: none;
+        gap: 20px;
+    }
+    
+    .profile-info {
+        margin-bottom: 25px;
+    }
+    
+    .profile-photo-section {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .photo-container {
+        display: flex;
         justify-content: center;
+        margin-bottom: 15px;
     }
     
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .profile-photo, .photo-placeholder {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        margin: 0 auto;
+    }
+    
+    .photo-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border: 2px dashed rgba(255, 68, 68, 0.3);
+        background: rgba(255, 68, 68, 0.05);
+    }
+    
+    .photo-icon {
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+    
+    .photo-text {
+        font-size: 0.8rem;
+        color: #888;
+    }
+    
+    .photo-upload-form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    
+    .photo-upload-form .btn {
+        width: auto;
+        min-width: 140px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+    }
+    
+    .profile-stats {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin: 20px 0;
+    }
+    
+    .stat-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        background: rgba(255, 68, 68, 0.05);
+        border: 1px solid rgba(255, 68, 68, 0.2);
+        border-radius: 8px;
+    }
+    
+    .stat-label {
+        font-size: 0.9rem;
+        color: #ccc;
+    }
+    
+    .stat-value {
+        font-size: 1rem;
+        font-weight: bold;
+        color: #ff4444;
+    }
+    
+    .profile-details {
+        width: 100%;
+    }
+    
+    .profile-form .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .profile-form label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #ff4444;
+    }
+    
+    .profile-form input,
+    .profile-form textarea {
+        width: 100%;
+        padding: 12px;
+        font-size: 1rem;
+        border: 2px solid rgba(255, 68, 68, 0.3);
+        border-radius: 8px;
+        background: rgba(0, 0, 0, 0.3);
+        color: #fff;
+        box-sizing: border-box;
+    }
+    
+    .profile-form input:focus,
+    .profile-form textarea:focus {
+        border-color: #ff4444;
+        outline: none;
+        box-shadow: 0 0 10px rgba(255, 68, 68, 0.3);
+    }
+    
+    .input-help {
+        margin-top: 5px;
+        font-size: 0.8rem;
+        color: #888;
+        font-style: italic;
+    }
+    
+    .form-actions {
+        margin-top: 25px;
+        text-align: center;
+    }
+    
+    .form-actions .btn {
+        width: 100%;
+        padding: 15px 20px;
+        font-size: 1rem;
+    }
+    
+    .profile-actions {
+        margin-top: 15px;
+    }
+    
+    .profile-actions .btn {
+        width: 100%;
+        padding: 12px 20px;
+        font-size: 1rem;
+    }
+    
+    /* Поля и метки профиля для чтения */
+    .profile-field {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: rgba(255, 68, 68, 0.05);
+        border: 1px solid rgba(255, 68, 68, 0.2);
+        border-radius: 8px;
+    }
+    
+    .profile-field-label {
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: #ff4444;
+        margin-bottom: 8px;
+        display: block;
+    }
+    
+    .profile-field-value {
+        font-size: 1rem;
+        line-height: 1.4;
+        color: #fff;
+        word-break: break-word;
+    }
+    
+    /* Если поле пустое */
+    .profile-field-empty {
+        color: #888;
+        font-style: italic;
     }
 }
 
-/* Темы для темного режима (если пользователь предпочитает темную тему) */
-@media (prefers-color-scheme: dark) {
-    body {
-        background: linear-gradient(135deg, #000000 0%, #111111 100%);
+/* Экстра-мобильные стили для профиля */
+@media (max-width: 480px) {
+    .profile-header h1 {
+        font-size: 1.2rem;
+    }
+    
+    .profile-photo, .photo-placeholder {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .photo-icon {
+        font-size: 1.5rem;
+    }
+    
+    .photo-text {
+        font-size: 0.7rem;
+    }
+    
+    .photo-upload-form .btn {
+        min-width: 120px;
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .stat-item {
+        padding: 10px 12px;
+    }
+    
+    .stat-label {
+        font-size: 0.8rem;
+    }
+    
+    .stat-value {
+        font-size: 0.9rem;
+    }
+    
+    .profile-form input,
+    .profile-form textarea {
+        padding: 10px;
+        font-size: 0.9rem;
+    }
+    
+    .form-actions .btn {
+        padding: 12px 15px;
+        font-size: 0.9rem;
     }
 }
 
-/* Улучшения для сенсорных экранов */
-@media (hover: none) and (pointer: coarse) {
-    .btn:hover {
-        transform: none; /* Убираем hover эффекты на сенсорных экранах */
+/* Улучшенная адаптивная навигация */
+@media (max-width: 768px) {
+    .main-nav {
+        position: relative;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.9);
+        border-bottom: 2px solid rgba(255, 68, 68, 0.3);
+        margin-bottom: 20px;
     }
     
-    .nav-links a:hover {
-        transform: none;
+    .nav-brand {
+        text-align: center;
+        margin-bottom: 10px;
     }
     
-    /* Увеличиваем области нажатия */
-    .btn, .nav-links a, button {
-        min-height: 44px;
-        min-width: 44px;
+    .nav-brand a {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #ff4444;
+        text-decoration: none;
+    }
+    
+    .nav-menu {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: rgba(0, 0, 0, 0.95);
+        border-radius: 8px;
+        padding: 10px;
+    }
+    
+    .nav-menu.mobile-show {
+        display: flex;
+    }
+    
+    .nav-link {
+        display: block;
+        padding: 10px 15px;
+        color: #ccc;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+        text-align: center;
+    }
+    
+    .nav-link:hover,
+    .nav-link.active {
+        background: rgba(255, 68, 68, 0.2);
+        color: #ff4444;
+    }
+    
+    .nav-logout {
+        border-top: 1px solid rgba(255, 68, 68, 0.3);
+        margin-top: 10px;
+        padding-top: 15px;
+        color: #ff6666 !important;
+    }
+    
+    /* Кнопка для показа/скрытия навигации на мобильных */
+    .mobile-nav-toggle {
+        display: block;
+        background: none;
+        border: 1px solid rgba(255, 68, 68, 0.5);
+        color: #ff4444;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        margin: 0 auto;
+        transition: all 0.3s ease;
+    }
+    
+    .mobile-nav-toggle:hover {
+        background: rgba(255, 68, 68, 0.1);
+        border-color: #ff4444;
+    }
+    
+    .mobile-nav-toggle::after {
+        content: ' ▼';
+        font-size: 0.8rem;
+    }
+    
+    .mobile-nav-toggle.active::after {
+        content: ' ▲';
     }
 }
 
-/* Анимации только если пользователь не отключил их */
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+/* Скрываем кнопку навигации на десктопе */
+@media (min-width: 769px) {
+    .mobile-nav-toggle {
+        display: none;
     }
     
-    .glitch-text {
-        animation: none;
+    .nav-menu {
+        display: flex !important;
     }
 }
