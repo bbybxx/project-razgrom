@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="form-header">            <a href="/" class="back-btn">← НАЗАД В МЕНЮ</a>
+            <h1 class="form-title">ВХОД В СИСТЕМУ</h1>
+        </header>
+
+        <main class="form-main">
+            <div class="form-container">                <div class="form-intro">
+                    <p>"Готов к максимально честному общению?"</p>
+                    <p class="form-warning">ТОЛЬКО ДЛЯ ЗАРЕГИСТРИРОВАННЫХ</p>
+                </div>
+
+                <% if (error) { %>
+                    <div class="error-message">
+                        ⚠️ <%= error %>
+                    </div>
+                <% } %>
+
+                <form method="POST" action="/login" class="login-form">                    <div class="form-group">
+                        <label for="username">ИМЯ УЧАСТНИКА:</label>
+                        <input type="text" id="username" name="username" required 
+                               placeholder="Твой логин..." autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">ПАРОЛЬ:</label>
+                        <input type="password" id="password" name="password" required 
+                               placeholder="Твой секретный код...">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">ВОЙТИ В РАЗГРОМ</button>
+                        <a href="/register" class="btn btn-link">НОВЫЙ УЧАСТНИК?</a>
+                    </div>
+                </form>                <div class="login-quote">                    <p>"Его ник был @bob_the_builder2007."</p>
+                    <p class="quote-context">- В интернете каждый имеет свою историю</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

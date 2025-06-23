@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Боевой Журнал - Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="/">ПРОЕКТ РАЗГРОМ</a>
+            </div>
+            <div class="nav-menu">
+                <a href="/dashboard" class="nav-link">ЦЕНТР</a>
+                <a href="/profile/<%= user.username %>" class="nav-link">МОЙ ПРОФИЛЬ</a>
+                <a href="/journal" class="nav-link active">БОЕВОЙ ЖУРНАЛ</a>
+                <a href="/rating" class="nav-link">РЕЙТИНГ</a>
+                <a href="/fun" class="nav-link">РАЗВЛЕЧЕНИЯ</a>
+                <a href="/chronicle" class="nav-link">ХРОНИКА</a>
+                <a href="/logout" class="nav-link nav-logout">ВЫХОД</a>
+            </div>
+        </nav>
+
+        <header class="journal-header">
+            <h1>БОЕВОЙ ЖУРНАЛ</h1>
+            <p class="journal-subtitle">/// ХРОНИКА СОБЫТИЙ И МЫСЛЕЙ БОЙЦОВ ///</p>
+        </header>
+
+        <main class="journal-main">
+            <div class="message-form-section">
+                <div class="form-container">
+                    <h2>НОВАЯ ЗАПИСЬ</h2>
+                    <form method="POST" action="/journal" class="message-form">
+                        <div class="form-group">
+                            <textarea name="message" rows="4" 
+                                      placeholder="Поделись своими мыслями, планами, достижениями..." 
+                                      required></textarea>
+                        </div>
+                        
+                        <div class="form-options">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="anonymous">
+                                <span class="checkmark"></span>
+                                ОТПРАВИТЬ АНОНИМНО
+                            </label>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">ОТПРАВИТЬ СООБЩЕНИЕ</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div class="messages-section">
+                <h2>АРХИВ СООБЩЕНИЙ</h2>
+                
+                <% if (messages.length > 0) { %>
+                    <div class="messages-list">
+                        <% messages.forEach(message => { %>
+                            <div class="message-item">
+                                <div class="message-header">
+                                    <div class="message-author">
+                                        <% if (message.author) { %>
+                                            <a href="/profile/<%= message.author %>" class="author-link">
+                                                <%= message.author %>
+                                            </a>
+                                        <% } else { %>
+                                            <span class="anonymous-author">НЕИЗВЕСТНЫЙ БОЕЦ</span>
+                                        <% } %>
+                                    </div>
+                                    <div class="message-date">
+                                        <%= new Date(message.timestamp).toLocaleString('ru-RU') %>
+                                    </div>
+                                </div>
+                                
+                                <div class="message-content">
+                                    <%= message.text %>
+                                </div>
+                                
+                                <div class="message-footer">
+                                    <div class="message-id">ID: <%= message.id %></div>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="no-messages">
+                        <div class="no-messages-icon">📝</div>
+                        <h3>ЖУРНАЛ ПУСТ</h3>
+                        <p>Стань первым, кто оставит запись в истории клуба!</p>
+                    </div>
+                <% } %>
+            </div>
+        </main>
+
+        <div class="journal-rules">
+            <h3>ПРАВИЛА ВЕДЕНИЯ ЖУРНАЛА:</h3>
+            <ul>
+                <li>Будь честен в своих записях</li>
+                <li>Уважай мнения других бойцов</li>
+                <li>Анонимность - твое право</li>
+                <li>Помни: здесь нет цензуры, но есть братство</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

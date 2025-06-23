@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Развлечения - Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="/">ПРОЕКТ РАЗГРОМ</a>
+            </div>
+            <div class="nav-menu">
+                <a href="/dashboard" class="nav-link">ЦЕНТР</a>
+                <a href="/profile/<%= user.username %>" class="nav-link">МОЙ ПРОФИЛЬ</a>
+                <a href="/journal" class="nav-link">БОЕВОЙ ЖУРНАЛ</a>
+                <a href="/rating" class="nav-link">РЕЙТИНГ</a>
+                <a href="/fun" class="nav-link active">РАЗВЛЕЧЕНИЯ</a>
+                <a href="/chronicle" class="nav-link">ХРОНИКА</a>
+                <a href="/logout" class="nav-link nav-logout">ВЫХОД</a>
+            </div>
+        </nav>
+
+        <header class="fun-header">
+            <h1>РАЗВЛЕЧЕНИЯ</h1>
+            <p class="fun-subtitle">/// ИГРЫ, ЧЕЛЛЕНДЖИ И БЕЗУМНЫЕ ИДЕИ ///</p>
+        </header>
+
+        <main class="fun-main">
+            <div class="fun-grid">
+                <!-- Генератор Безумия -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>🎲 ГЕНЕРАТОР БЕЗУМИЯ</h2>
+                        <p>Получи случайное задание для себя или друзей</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div id="random-task-display" class="task-display">
+                            <p>Нажми кнопку, чтобы получить задание...</p>
+                        </div>
+                        
+                        <button id="generate-task-btn" class="btn btn-primary">
+                            СГЕНЕРИРОВАТЬ ЗАДАНИЕ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Тайные Сообщения -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>🔐 ТАЙНЫЕ СООБЩЕНИЯ</h2>
+                        <p>Шифруй и расшифровывай секретные послания</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="cipher-section">
+                            <textarea id="cipher-input" rows="3" placeholder="Введи текст для шифрования..."></textarea>
+                            
+                            <div class="cipher-buttons">
+                                <button onclick="encryptMessage()" class="btn btn-secondary">ЗАШИФРОВАТЬ</button>
+                                <button onclick="decryptMessage()" class="btn btn-secondary">РАСШИФРОВАТЬ</button>
+                            </div>
+                            
+                            <div id="cipher-output" class="cipher-result">
+                                <p>Результат появится здесь...</p>
+                            </div>
+                        </div>
+                        
+                        <div class="cipher-keys">
+                            <h4>КЛЮЧИ К ШИФРУ:</h4>
+                            <ul>
+                                <li>ROT13: Сдвиг на 13 позиций</li>
+                                <li>Простая замена букв</li>
+                                <li>Обратное написание</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Случайные Факты -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>💡 СЛУЧАЙНЫЕ ФАКТЫ</h2>
+                        <p>Интересные факты о Бойцовском клубе и жизни</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div id="random-fact-display" class="fact-display">
+                            <p>Нажми кнопку, чтобы узнать интересный факт...</p>
+                        </div>
+                        
+                        <button id="generate-fact-btn" class="btn btn-primary">
+                            ПОЛУЧИТЬ ФАКТ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Генератор Имен -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>👤 ГЕНЕРАТОР БОЕВЫХ ИМЕН</h2>
+                        <p>Создай крутое боевое имя для себя или друга</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div id="fight-name-display" class="name-display">
+                            <p>Нажми кнопку, чтобы сгенерировать боевое имя...</p>
+                        </div>
+                        
+                        <button id="generate-name-btn" class="btn btn-primary">
+                            СГЕНЕРИРОВАТЬ ИМЯ
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Счетчик Хаоса -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>📊 СЧЕТЧИК ХАОСА</h2>
+                        <p>Увеличивай уровень хаоса в клубе</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div class="chaos-counter">
+                            <div class="chaos-level">
+                                <span id="chaos-number">0</span>
+                                <span class="chaos-label">УРОВЕНЬ ХАОСА</span>
+                            </div>
+                            
+                            <button id="chaos-btn" class="btn btn-danger">
+                                ДОБАВИТЬ ХАОС
+                            </button>
+                            
+                            <div class="chaos-description">
+                                <p id="chaos-status">Все спокойно...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Цитаты -->
+                <div class="fun-card">
+                    <div class="card-header">
+                        <h2>💬 МУДРОСТЬ КЛУБА</h2>
+                        <p>Вдохновляющие цитаты из Бойцовского клуба</p>
+                    </div>
+                    
+                    <div class="card-content">
+                        <div id="quote-display" class="quote-display">
+                            <blockquote id="quote-text">
+                                Нажми кнопку, чтобы получить мудрость...
+                            </blockquote>
+                            <cite id="quote-author"></cite>
+                        </div>
+                        
+                        <button id="generate-quote-btn" class="btn btn-primary">
+                            ПОЛУЧИТЬ ЦИТАТУ
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script src="/js/fun.js"></script>
+</body>
+</html>

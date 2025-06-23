@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="form-header">            <a href="/" class="back-btn">← НАЗАД В БЕЗОПАСНОСТЬ</a>
+            <h1 class="form-title">СТАТЬ УЧАСТНИКОМ</h1>
+        </header>
+
+        <main class="form-main">
+            <div class="form-container">                <div class="form-intro">
+                    <p>"Только потерявшись в интернете мы находим настоящих друзей"</p>
+                    <p class="form-warning">ВНИМАНИЕ: Выйти можно, но зачем?</p>
+                </div>
+
+                <% if (error) { %>
+                    <div class="error-message">
+                        ⚠️ <%= error %>
+                    </div>
+                <% } %>
+
+                <form method="POST" action="/register" class="register-form">                    <div class="form-group">
+                        <label for="username">ИМЯ В СИСТЕМЕ:</label>
+                        <input type="text" id="username" name="username" required 
+                               placeholder="Твой уникальный ник..." autocomplete="off">
+                        <div class="input-help">Это твой ID в нашей базе</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">СЕКРЕТНЫЙ КОД:</label>
+                        <input type="password" id="password" name="password" required 
+                               placeholder="Надежный пароль...">
+                        <div class="input-help">Лучше запиши где-то</div>
+                    </div>                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">ПОДКЛЮЧИТЬСЯ</button>
+                        <a href="/login" class="btn btn-link">УЖЕ УЧАСТНИК?</a>
+                    </div>
+                </form>                <div class="form-rules">
+                    <h3>БАЗОВЫЕ ПРАВИЛА:</h3>
+                    <ul>
+                        <li>Первое правило: Не сливать инфу о проекте</li>
+                        <li>Второе правило: СЕРЬЕЗНО, НЕ СЛИВАТЬ!</li>
+                        <li>Третье правило: Уважать всех участников</li>
+                        <li>Четвертое правило: Получать кайф от общения</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

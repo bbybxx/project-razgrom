@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рейтинг Бойцов - Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <nav class="main-nav">
+            <div class="nav-brand">
+                <a href="/">ПРОЕКТ РАЗГРОМ</a>
+            </div>
+            <div class="nav-menu">
+                <a href="/dashboard" class="nav-link">ЦЕНТР</a>
+                <a href="/profile/<%= user.username %>" class="nav-link">МОЙ ПРОФИЛЬ</a>
+                <a href="/journal" class="nav-link">БОЕВОЙ ЖУРНАЛ</a>
+                <a href="/rating" class="nav-link active">РЕЙТИНГ</a>
+                <a href="/fun" class="nav-link">РАЗВЛЕЧЕНИЯ</a>
+                <a href="/chronicle" class="nav-link">ХРОНИКА</a>
+                <a href="/logout" class="nav-link nav-logout">ВЫХОД</a>
+            </div>
+        </nav>
+
+        <header class="rating-header">
+            <h1>РЕЙТИНГ БОЙЦОВ</h1>
+            <p class="rating-subtitle">/// ТАБЛИЦА ПОЧЕТА И БЕЗУМИЯ ///</p>
+        </header>
+
+        <main class="rating-main">
+            <div class="rating-info">
+                <div class="info-card">
+                    <h3>КАК РАБОТАЕТ РЕЙТИНГ?</h3>
+                    <ul>
+                        <li>Голосуй за товарищей, которые заслуживают признания</li>
+                        <li>Каждый голос = +1 к рейтингу</li>
+                        <li>Нельзя голосовать за себя</li>
+                        <li>Рейтинг обновляется мгновенно</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="rating-table">
+                <h2>ТАБЛИЦА ЛИДЕРОВ</h2>
+                
+                <% if (users.length > 0) { %>
+                    <div class="fighters-list">
+                        <% users.forEach((fighter, index) => { %>
+                            <div class="fighter-card <%= fighter.username === user.username ? 'own-card' : '' %>">
+                                <div class="fighter-rank">
+                                    <div class="rank-number">#<%= index + 1 %></div>
+                                    <% if (index === 0) { %>
+                                        <div class="rank-crown">👑</div>
+                                    <% } else if (index === 1) { %>
+                                        <div class="rank-medal">🥈</div>
+                                    <% } else if (index === 2) { %>
+                                        <div class="rank-medal">🥉</div>
+                                    <% } %>
+                                </div>
+
+                                <div class="fighter-info">
+                                    <div class="fighter-photo">
+                                        <% if (fighter.photo) { %>
+                                            <img src="/uploads/<%= fighter.photo %>" alt="<%= fighter.username %>">
+                                        <% } else { %>
+                                            <div class="photo-placeholder">
+                                                <span>📷</span>
+                                            </div>
+                                        <% } %>
+                                    </div>
+
+                                    <div class="fighter-details">
+                                        <div class="fighter-name">
+                                            <a href="/profile/<%= fighter.username %>" class="name-link">
+                                                <%= fighter.username %>
+                                            </a>
+                                            <% if (fighter.fightName) { %>
+                                                <div class="fight-name">"<%= fighter.fightName %>"</div>
+                                            <% } %>
+                                        </div>
+
+                                        <div class="fighter-stats">
+                                            <span class="stat-item">
+                                                🏆 <%= fighter.achievements ? fighter.achievements.length : 0 %> достижений
+                                            </span>
+                                            <span class="stat-item">
+                                                📅 В клубе с <%= new Date(fighter.joinDate).toLocaleDateString('ru-RU') %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="fighter-rating">
+                                    <div class="rating-score">
+                                        <span class="score-number"><%= fighter.rating || 0 %></span>
+                                        <span class="score-label">⭐</span>
+                                    </div>
+
+                                    <% if (fighter.username !== user.username) { %>
+                                        <button class="btn btn-vote" onclick="voteForFighter('<%= fighter.username %>', this)">
+                                            ОТДАТЬ ГОЛОС
+                                        </button>
+                                    <% } else { %>
+                                        <div class="own-marker">ТЫ</div>
+                                    <% } %>
+                                </div>
+                            </div>
+                        <% }); %>
+                    </div>
+                <% } else { %>
+                    <div class="no-fighters">
+                        <div class="no-fighters-icon">👥</div>
+                        <h3>БОЙЦОВ НЕТ</h3>
+                        <p>Будь первым в рейтинге!</p>
+                    </div>
+                <% } %>
+            </div>
+
+            <div class="rating-legend">
+                <h3>ЛЕГЕНДА РЕЙТИНГА:</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="legend-icon">👑</span>
+                        <span class="legend-text">Король клуба</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">🥈</span>
+                        <span class="legend-text">Правая рука</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">🥉</span>
+                        <span class="legend-text">Верный боец</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/main.js"></script>
+    <script>
+        async function voteForFighter(username, button) {
+            try {
+                const response = await fetch(`/vote/${username}`, { method: 'POST' });
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Обновляем рейтинг на странице
+                    const scoreElement = button.parentElement.querySelector('.score-number');
+                    scoreElement.textContent = data.newRating;
+                    
+                    // Изменяем кнопку
+                    button.textContent = 'ГОЛОС ОТДАН!';
+                    button.disabled = true;
+                    button.classList.add('voted');
+                    
+                    // Показываем уведомление
+                    showNotification(`Голос за ${username} отдан! Новый рейтинг: ${data.newRating}`, 'success');
+                    
+                    // Перезагружаем страницу через 2 секунды для корректной сортировки
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showNotification(data.error, 'error');
+                }
+            } catch (error) {
+                showNotification('Ошибка при голосовании', 'error');
+            }
+        }
+
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

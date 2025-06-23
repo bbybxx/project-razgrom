@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проект Разгром</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="main-header">
+            <div class="glitch-text" data-text="ПРОЕКТ РАЗГРОМ">ПРОЕКТ РАЗГРОМ</div>            <div class="subtitle">/// ПЕРВЫЙ ЗАКОН: НЕ СЛИВАТЬ ИНФУ ПРО РАЗГРОМ ///</div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-section">                <div class="quote-box">
+                    <p class="quote">"Вы встречаете самых интересных людей когда батя отключает интернет"</p>
+                    <p class="quote-author">- Твйно Дернул</p>
+                </div><div class="description">
+                    <p>Добро пожаловать в самый элитный дискорд сервер без голосовых.</p>
+                    <p>Здесь правила существуют исключительно для красоты.</p>
+                    <p>Здесь ты можешь быть собой (или притворяться кем угодно).</p>
+                </div>
+
+                <div class="action-buttons">                    <% if (user) { %>
+                        <a href="/dashboard" class="btn btn-primary">ВОЙТИ В САРАЙ</a>
+                        <a href="/logout" class="btn btn-secondary">СЛИТЬ ИЗ ЧАТА</a>
+                        <p class="user-greeting">Тебе рады, <span class="username"><%= user.username %></span></p>
+                    <% } else { %>                        <a href="/login" class="btn btn-primary">ЗАЙТИ В РАЗГРОМ</a>
+                        <a href="/register" class="btn btn-secondary">СТАТЬ СВОИМ</a>
+                    <% } %>
+                </div>
+            </div>
+
+            <div class="mystery-section">                <div class="mystery-box">
+                    <h3>ЧТО ТАКОЕ ПРОЕКТ РАЗГРОМ?</h3>
+                    <p>Это место, где друзья становятся легендами интернета.</p>
+                    <p>Это приватная зона для топовых людей.</p>
+                    <p>Это максимально честная социальная сеть.</p>
+                    <div class="warning">
+                        ⚠️ БЕЗ ИНВАЙТА НЕ ВОЙТИ ⚠️
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="main-footer">
+            <div class="footer-text">                <p>© 2025 ПРОЕКТ РАЗГРОМ | КОНФИДЕНЦИАЛЬНОСТЬ НЕ ГАРАНТИРОВАНА</p>
+                <p class="footer-motto">"МЫ ЛЮДИ, КОТОРЫХ ЛУЧШЕ НЕ ЗНАТЬ"</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
