@@ -83,6 +83,15 @@ function requireAuth(req, res, next) {
   }
 }
 
+// Middleware для проверки админских прав
+function requireAdmin(req, res, next) {
+  if (req.session.user && req.session.user.isAdmin) {
+    next();
+  } else {
+    res.status(403).send('Доступ запрещен! Только для администраторов.');
+  }
+}
+
 // Создание необходимых папок и файлов при запуске
 function initializeProject() {
   const dirs = ['public/uploads', 'data'];
@@ -91,14 +100,43 @@ function initializeProject() {
       fs.mkdirSync(dir, { recursive: true });
     }
   });
-
   // Инициализация JSON файлов
   if (!fs.existsSync('data/users.json')) {
-    writeJSONFile('data/users.json', {});
+    // Создаем админа по умолчанию
+    const defaultUsers = {
+      admin: {
+        username: 'admin',
+        password: hashPassword('admin123'),
+        fightName: 'Главный Координатор',
+        bio: 'Основатель и администратор Проекта Разгром',
+        photo: '',
+        achievements: [
+          {
+            id: Date.now(),
+            text: 'Создал Проект Разгром',
+            date: new Date().toISOString()
+          }
+        ],
+        rating: 1000,
+        isAdmin: true,
+        joinDate: new Date().toISOString()
+      }
+    };
+    writeJSONFile('data/users.json', defaultUsers);
   }
+  
   if (!fs.existsSync('data/messages.json')) {
-    writeJSONFile('data/messages.json', []);
-  }  if (!fs.existsSync('data/chronicle.json')) {
+    const defaultMessages = [
+      {
+        id: Date.now(),
+        text: 'Добро пожаловать в Проект Разгром! Первое правило проекта - никому не рассказывать о проекте.',
+        author: 'admin',
+        timestamp: new Date().toISOString(),
+        isSystem: true
+      }
+    ];
+    writeJSONFile('data/messages.json', defaultMessages);
+  }if (!fs.existsSync('data/chronicle.json')) {
     writeJSONFile('data/chronicle.json', [
       {
         id: 1,
@@ -467,6 +505,85 @@ app.get('/api/random-name', requireAuth, async (req, res) => {
     ];
     const randomName = fallbackNames[Math.floor(Math.random() * fallbackNames.length)];
     res.json({ name: randomName });
+  }
+});
+
+// Админ панель
+app.get('/admin', requireAuth, requireAdmin, (req, res) => {
+  const users = readJSONFile('data/users.json');
+  const messages = readJSONFile('data/messages.json');
+  const chronicle = readJSONFile('data/chronicle.json');
+  
+  res.render('admin', {
+    user: req.session.user,
+    users: users,
+    totalUsers: Object.keys(users).length,
+    totalMessages: messages.length,
+    totalEvents: chronicle.length,
+    onlineUsers: 1 // Можно реализовать подсчет онлайн пользователей
+  });
+});
+
+// Админ API endpoints
+app.post('/admin/make-admin/:username', requireAuth, requireAdmin, (req, res) => {
+  const users = readJSONFile('data/users.json');
+  if (users[req.params.username]) {
+    users[req.params.username].isAdmin = true;
+    writeJSONFile('data/users.json', users);
+  }
+  res.json({ success: true });
+});
+
+app.delete('/admin/delete-user/:username', requireAuth, requireAdmin, (req, res) => {
+  const users = readJSONFile('data/users.json');
+  if (users[req.params.username] && !users[req.params.username].isAdmin) {
+    delete users[req.params.username];
+    writeJSONFile('data/users.json', users);
+  }
+  res.json({ success: true });
+});
+
+app.post('/admin/reset-password/:username', requireAuth, requireAdmin, (req, res) => {
+  const users = readJSONFile('data/users.json');
+  const { password } = req.body;
+  if (users[req.params.username] && password) {
+    users[req.params.username].password = hashPassword(password);
+    writeJSONFile('data/users.json', users);
+  }
+  res.json({ success: true });
+});
+
+app.post('/admin/clear-messages', requireAuth, requireAdmin, (req, res) => {
+  writeJSONFile('data/messages.json', []);
+  res.json({ success: true });
+});
+
+app.post('/admin/system-message', requireAuth, requireAdmin, (req, res) => {
+  const messages = readJSONFile('data/messages.json');
+  const { message } = req.body;
+  messages.push({
+    id: Date.now(),
+    text: message,
+    author: 'СИСТЕМА',
+    timestamp: new Date().toISOString(),
+    isSystem: true
+  });
+  writeJSONFile('data/messages.json', messages);
+  res.json({ success: true });
+});
+
+// Смена пароля для обычных пользователей
+app.post('/change-password', requireAuth, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const users = readJSONFile('data/users.json');
+  const user = users[req.session.user.username];
+  
+  if (user && user.password === hashPassword(currentPassword)) {
+    user.password = hashPassword(newPassword);
+    writeJSONFile('data/users.json', users);
+    res.json({ success: true });
+  } else {
+    res.status(400).json({ error: 'Неверный текущий пароль' });
   }
 });
 

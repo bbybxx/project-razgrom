@@ -723,14 +723,23 @@ function initPWA() {
 
 // Инициализация мобильного сайдбара
 function initMobileSidebar() {
+    console.log('Initializing mobile sidebar...');
     const menuToggle = document.getElementById('mobile-menu-toggle');
     const sidebar = document.getElementById('mobile-sidebar');
     const overlay = document.getElementById('sidebar-overlay');
     
-    if (!menuToggle || !sidebar || !overlay) return;
+    console.log('Elements found:', { menuToggle, sidebar, overlay });
+    
+    if (!menuToggle || !sidebar || !overlay) {
+        console.error('Sidebar elements not found!');
+        return;
+    }
+    
+    console.log('Setting up sidebar events...');
     
     // Открытие сайдбара
     menuToggle.addEventListener('click', function() {
+        console.log('Menu toggle clicked');
         sidebar.classList.add('open');
         overlay.classList.add('active');
         document.body.style.overflow = 'hidden'; // Блокируем скролл

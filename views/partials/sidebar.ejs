@@ -7,27 +7,31 @@
     <div class="sidebar-header">
         <h2 class="sidebar-logo">РАЗГРОМ</h2>
         <p class="sidebar-subtitle">Первое правило - никому не рассказывать</p>
-    </div>
-    <div class="sidebar-nav">
-        <a href="/dashboard" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">🏠</span>ГЛАВНАЯ
-        </a>
-        <a href="/profile/<%= user.username %>" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">👤</span>ПРОФИЛЬ
-        </a>
-        <a href="/journal" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">💬</span>ОБЩИЙ ЧАТ
-        </a>
-        <a href="/rating" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">🏆</span>РЕЙТИНГ
-        </a>
-        <a href="/fun" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">🎮</span>РАЗВЛЕЧЕНИЯ
-        </a>
-        <a href="/chronicle" class="sidebar-nav-item">
-            <span class="sidebar-nav-icon">📚</span>ИСТОРИЯ
-        </a>
-    </div>
+    </div>        <div class="sidebar-nav">
+            <a href="/dashboard" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">🏠</span>ЦЕНТР УПРАВЛЕНИЯ
+            </a>
+            <a href="/profile/<%= user.username %>" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">👤</span>ПРОФИЛЬ
+            </a>
+            <a href="/journal" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">💬</span>ОБЩИЙ ЧАТ
+            </a>
+            <a href="/rating" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">🏆</span>РЕЙТИНГ
+            </a>
+            <a href="/fun" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">🎮</span>РАЗВЛЕЧЕНИЯ
+            </a>
+            <a href="/chronicle" class="sidebar-nav-item">
+                <span class="sidebar-nav-icon">📚</span>ИСТОРИЯ
+            </a>
+            <% if (user.isAdmin) { %>
+                <a href="/admin" class="sidebar-nav-item" style="border-left: 3px solid #ff4444;">
+                    <span class="sidebar-nav-icon">🔧</span>АДМИН ПАНЕЛЬ
+                </a>
+            <% } %>
+        </div>
     <div class="sidebar-user-info">
         <p class="sidebar-username"><%= user.username %></p>
         <% if (user.fightName) { %>
