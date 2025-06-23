@@ -9,23 +9,7 @@
 </head>
 <body>
     <%- include('partials/sidebar') %>
-    
-    <div class="container">
-        <nav class="main-nav">
-            <div class="nav-brand">
-                <a href="/">ПРОЕКТ РАЗГРОМ</a>
-            </div>
-            <div class="nav-menu">
-                <a href="/dashboard" class="nav-link">ЦЕНТР</a>
-                <a href="/profile/<%= user.username %>" class="nav-link">МОЙ ПРОФИЛЬ</a>
-                <a href="/journal" class="nav-link">БОЕВОЙ ЖУРНАЛ</a>
-                <a href="/rating" class="nav-link">РЕЙТИНГ</a>
-                <a href="/fun" class="nav-link active">РАЗВЛЕЧЕНИЯ</a>
-                <a href="/chronicle" class="nav-link">ХРОНИКА</a>
-                <a href="/logout" class="nav-link nav-logout">ВЫХОД</a>
-            </div>
-        </nav>
-
+      <div class="container">
         <header class="fun-header">
             <h1>РАЗВЛЕЧЕНИЯ</h1>
             <p class="fun-subtitle">/// ИГРЫ, ЧЕЛЛЕНДЖИ И БЕЗУМНЫЕ ИДЕИ ///</p>

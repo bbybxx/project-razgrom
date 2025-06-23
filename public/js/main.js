@@ -14,11 +14,10 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (window.location.pathname === '/journal') {
         initJournalPage();
     } else if (window.location.pathname === '/rating') {
-        initRatingPage();
-    }
+        initRatingPage();    }
     
     initMobileSidebar();
-    initMobileNavigation();
+    // УДАЛЕНО: initMobileNavigation() - теперь используется только сайдбар
 });
 
 // Глитч эффекты
@@ -825,42 +824,4 @@ function initMobileSidebar() {
 // Инициализация PWA
 document.addEventListener('DOMContentLoaded', initPWA);
 
-// Инициализация мобильной навигации
-function initMobileNavigation() {
-    const navMenus = document.querySelectorAll('.nav-menu');
-    
-    navMenus.forEach(navMenu => {
-        const navContainer = navMenu.parentElement;
-        
-        // Создаем кнопку для показа/скрытия меню
-        const toggleButton = document.createElement('button');
-        toggleButton.className = 'mobile-nav-toggle';
-        toggleButton.textContent = 'МЕНЮ';
-        toggleButton.setAttribute('aria-label', 'Показать/скрыть меню');
-        
-        // Вставляем кнопку перед меню
-        navContainer.insertBefore(toggleButton, navMenu);
-        
-        // Обработчик клика
-        toggleButton.addEventListener('click', function() {
-            const isVisible = navMenu.classList.contains('mobile-show');
-            
-            if (isVisible) {
-                navMenu.classList.remove('mobile-show');
-                toggleButton.classList.remove('active');
-            } else {
-                navMenu.classList.add('mobile-show');
-                toggleButton.classList.add('active');
-            }
-        });
-        
-        // Скрываем меню при клике на ссылку
-        const navLinks = navMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                navMenu.classList.remove('mobile-show');
-                toggleButton.classList.remove('active');
-            });
-        });
-    });
-}
+// УДАЛЕНО: Функция мобильной навигации - заменена на сайдбар

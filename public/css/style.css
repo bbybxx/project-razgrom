@@ -502,22 +502,9 @@ body {
 }
 
 /* Навигация */
+/* ГЛАВНАЯ НАВИГАЦИЯ ОТКЛЮЧЕНА - ИСПОЛЬЗУЕТСЯ ТОЛЬКО МОБИЛЬНЫЙ САЙДБАР */
 .main-nav {
-    background: rgba(0, 0, 0, 0.9);
-    border-bottom: 1px solid #333;
-    padding: 15px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-}
-
-.main-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 20px;
+    display: none !important;
 }
 
 .nav-brand a {
@@ -529,10 +516,10 @@ body {
 }
 
 .nav-menu {
-    display: flex;
-    gap: 30px;
+    display: flex;    gap: 30px;
 }
 
+/* СТАРЫЕ СТИЛИ НАВИГАЦИИ - ЗАКОММЕНТИРОВАНЫ
 .nav-link {
     color: #ccc;
     text-decoration: none;
@@ -557,6 +544,7 @@ body {
 .nav-logout:hover {
     color: #ff4444;
 }
+*/
 
 /* Dashboard */
 .dashboard-header {
@@ -2119,15 +2107,6 @@ body {
     .mobile-menu-toggle {
         display: block;
     }
-    
-    /* Скрываем обычную навигацию на мобильных */
-    nav ul {
-        display: none;
-    }
-    
-    .main-content {
-        padding-top: 80px; /* Место для кнопки меню */
-    }
 }
 
 /* =========================
@@ -2540,101 +2519,80 @@ body {
     }
 }
 
-/* Улучшенная адаптивная навигация */
+/* УДАЛЕНЫ СТАРЫЕ СТИЛИ НАВИГАЦИИ - ТЕПЕРЬ ИСПОЛЬЗУЕТСЯ ТОЛЬКО САЙДБАР */
+
+/* Улучшенные отступы контента для работы с сайдбаром */
+.container {
+    padding-top: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
 @media (max-width: 768px) {
-    .main-nav {
-        position: relative;
-        padding: 10px 20px;
-        background: rgba(0, 0, 0, 0.9);
-        border-bottom: 2px solid rgba(255, 68, 68, 0.3);
-        margin-bottom: 20px;
+    .container {
+        padding-top: 80px; /* Отступ сверху для кнопки мобильного меню */
+        padding-left: 15px;
+        padding-right: 15px;
     }
     
-    .nav-brand {
-        text-align: center;
-        margin-bottom: 10px;
-    }
-    
-    .nav-brand a {
-        font-size: 1.2rem;
-        font-weight: bold;
-        color: #ff4444;
-        text-decoration: none;
-    }
-    
-    .nav-menu {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: rgba(0, 0, 0, 0.95);
-        border-radius: 8px;
-        padding: 10px;
-    }
-    
-    .nav-menu.mobile-show {
-        display: flex;
-    }
-    
-    .nav-link {
-        display: block;
-        padding: 10px 15px;
-        color: #ccc;
-        text-decoration: none;
-        border-radius: 5px;
-        transition: all 0.3s ease;
-        font-size: 0.9rem;
-        text-align: center;
-    }
-    
-    .nav-link:hover,
-    .nav-link.active {
-        background: rgba(255, 68, 68, 0.2);
-        color: #ff4444;
-    }
-    
-    .nav-logout {
-        border-top: 1px solid rgba(255, 68, 68, 0.3);
-        margin-top: 10px;
-        padding-top: 15px;
-        color: #ff6666 !important;
-    }
-    
-    /* Кнопка для показа/скрытия навигации на мобильных */
+    /* Убираем старые стили навигации полностью */
+    .main-nav,
+    .nav-menu,
+    .nav-brand,
+    .nav-link,
     .mobile-nav-toggle {
-        display: block;
-        background: none;
-        border: 1px solid rgba(255, 68, 68, 0.5);
+        display: none !important;
+    }
+    
+    /* Заголовки страниц */
+    .dashboard-header,
+    .profile-header,
+    .journal-header,
+    .rating-header,
+    .fun-header,
+    .chronicle-header,
+    .page-header {
+        margin-top: 0;
+        padding-top: 20px;
+    }
+    
+    .dashboard-header h1,
+    .profile-header h1,
+    .journal-header h1,
+    .rating-header h1,
+    .fun-header h1,
+    .chronicle-header h1,
+    .page-header h1 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 20px;
         color: #ff4444;
-        padding: 8px 12px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 0.9rem;
-        margin: 0 auto;
-        transition: all 0.3s ease;
+        text-shadow: 0 0 10px rgba(255, 68, 68, 0.5);
     }
     
-    .mobile-nav-toggle:hover {
-        background: rgba(255, 68, 68, 0.1);
-        border-color: #ff4444;
+    /* Основной контент */
+    .main-content {
+        padding-top: 20px;
     }
     
-    .mobile-nav-toggle::after {
-        content: ' ▼';
-        font-size: 0.8rem;
-    }
-    
-    .mobile-nav-toggle.active::after {
-        content: ' ▲';
+    /* Улучшения для каждой страницы */
+    .dashboard-main,
+    .profile-main,
+    .journal-main,
+    .rating-main,
+    .fun-main,
+    .chronicle-main {
+        margin-top: 20px;
     }
 }
 
-/* Скрываем кнопку навигации на десктопе */
+/* Для десктопа скрываем кнопку мобильного меню */
 @media (min-width: 769px) {
-    .mobile-nav-toggle {
-        display: none;
+    .mobile-menu-toggle {
+        display: none !important;
     }
     
-    .nav-menu {
-        display: flex !important;
+    .container {
+        padding-top: 20px;
     }
 }
