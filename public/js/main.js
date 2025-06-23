@@ -462,3 +462,262 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Мобильная оптимизация и улучшения UX
+
+// Определение мобильного устройства
+function isMobileDevice() {
+    return window.innerWidth <= 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+// Улучшенная обработка сенсорных событий
+function addTouchSupport() {
+    if (isMobileDevice()) {
+        // Добавляем поддержку свайпов для навигации
+        let touchStartX = 0;
+        let touchStartY = 0;
+        
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+        });
+        
+        document.addEventListener('touchend', function(e) {
+            const touchEndX = e.changedTouches[0].clientX;
+            const touchEndY = e.changedTouches[0].clientY;
+            
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Горизонтальный свайп (для навигации между страницами)
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX > 0) {
+                    // Свайп вправо - назад
+                    if (document.referrer && document.referrer !== window.location.href) {
+                        // history.back();
+                    }
+                } else {
+                    // Свайп влево - вперед
+                    // Можно добавить навигацию к следующей странице
+                }
+            }
+        });
+        
+        // Предотвращаем двойное нажатие для зума
+        let lastTouchEnd = 0;
+        document.addEventListener('touchend', function(event) {
+            const now = (new Date()).getTime();
+            if (now - lastTouchEnd <= 300) {
+                event.preventDefault();
+            }
+            lastTouchEnd = now;
+        }, false);
+    }
+}
+
+// Оптимизация для мобильных форм
+function optimizeMobileForms() {
+    if (isMobileDevice()) {
+        // Автоматически скролл к активному элементу формы
+        const inputs = document.querySelectorAll('input, textarea, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                setTimeout(() => {
+                    this.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }, 300); // Задержка для открытия клавиатуры
+            });
+        });
+        
+        // Улучшение для числовых полей
+        const numberInputs = document.querySelectorAll('input[type="number"]');
+        numberInputs.forEach(input => {
+            input.setAttribute('inputmode', 'numeric');
+            input.setAttribute('pattern', '[0-9]*');
+        });
+    }
+}
+
+// Адаптивные размеры для генераторов
+function adaptGeneratorsForMobile() {
+    if (isMobileDevice()) {
+        // Уменьшаем скорость анимации печатания для мобильных
+        window.mobileTypewriterSpeed = 30; // Быстрее для мобильных
+        
+        // Адаптируем размеры элементов
+        const largeTexts = document.querySelectorAll('.glitch-text, .stat-number');
+        largeTexts.forEach(element => {
+            element.style.fontSize = window.getComputedStyle(element).fontSize;
+        });
+    }
+}
+
+// Оптимизация производительности на мобильных
+function optimizePerformance() {
+    if (isMobileDevice()) {
+        // Уменьшаем количество анимаций на слабых устройствах
+        if (navigator.hardwareConcurrency <= 2) {
+            document.body.classList.add('reduced-animations');
+            
+            // Добавляем CSS класс для упрощенных анимаций
+            const style = document.createElement('style');
+            style.textContent = `
+                .reduced-animations * {
+                    animation-duration: 0.2s !important;
+                    transition-duration: 0.2s !important;
+                }
+                .reduced-animations .glitch-text {
+                    animation: none !important;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Ленивая загрузка для изображений
+        const images = document.querySelectorAll('img');
+        images.forEach(img => {
+            img.setAttribute('loading', 'lazy');
+        });
+    }
+}
+
+// Улучшенная навигация для мобильных
+function improveMobileNavigation() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    navLinks.forEach(link => {
+        // Добавляем визуальную обратную связь для нажатий
+        link.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.95)';
+            this.style.opacity = '0.8';
+        });
+        
+        link.addEventListener('touchend', function() {
+            setTimeout(() => {
+                this.style.transform = '';
+                this.style.opacity = '';
+            }, 150);
+        });
+    });
+}
+
+// Адаптивное меню (если нужно добавить гамбургер-меню)
+function createMobileMenu() {
+    if (isMobileDevice() && window.innerWidth <= 480) {
+        const nav = document.querySelector('.nav-links');
+        if (nav && nav.children.length > 4) {
+            nav.classList.add('mobile-collapsible');
+            
+            // Можно добавить кнопку "показать больше" для длинного меню
+            const showMoreBtn = document.createElement('button');
+            showMoreBtn.textContent = '••• Еще';
+            showMoreBtn.className = 'btn btn-secondary mobile-menu-toggle';
+            showMoreBtn.style.fontSize = '12px';
+            showMoreBtn.style.padding = '8px 12px';
+            
+            let isExpanded = false;
+            showMoreBtn.addEventListener('click', function() {
+                isExpanded = !isExpanded;
+                nav.style.maxHeight = isExpanded ? 'none' : '200px';
+                nav.style.overflow = isExpanded ? 'visible' : 'hidden';
+                this.textContent = isExpanded ? '••• Скрыть' : '••• Еще';
+            });
+            
+            // nav.appendChild(showMoreBtn);
+        }
+    }
+}
+
+// Инициализация всех мобильных улучшений
+function initMobileOptimizations() {
+    addTouchSupport();
+    optimizeMobileForms();
+    adaptGeneratorsForMobile();
+    optimizePerformance();
+    improveMobileNavigation();
+    createMobileMenu();
+    
+    // Дополнительные настройки для iOS
+    if (/iPad|iPhone|iPod/.test(navigator.userAgent)) {
+        // Исправляем проблему с 100vh на iOS
+        const setVH = () => {
+            const vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        };
+        
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', setVH);
+    }
+}
+
+// Запускаем мобильные оптимизации после загрузки DOM
+document.addEventListener('DOMContentLoaded', function() {
+    initMobileOptimizations();
+    initPWA();
+});
+
+// Переопределяем функцию typeWriterAsync для мобильных устройств
+const originalTypeWriterAsync = window.typeWriterAsync;
+if (typeof originalTypeWriterAsync === 'function') {
+    window.typeWriterAsync = function(element, text, speed = 50) {
+        const mobileSpeed = isMobileDevice() ? Math.max(speed * 0.6, 20) : speed;
+        return originalTypeWriterAsync(element, text, mobileSpeed);
+    };
+}
+
+// PWA и Service Worker
+function initPWA() {
+    // Регистрация Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('SW registered: ', registration);
+                })
+                .catch(function(registrationError) {
+                    console.log('SW registration failed: ', registrationError);
+                });
+        });
+    }
+
+    // Предложение установки PWA
+    let deferredPrompt;
+    const installButton = document.createElement('button');
+    installButton.textContent = '📱 Установить приложение';
+    installButton.className = 'btn btn-secondary install-app-btn';
+    installButton.style.display = 'none';
+    installButton.style.position = 'fixed';
+    installButton.style.bottom = '20px';
+    installButton.style.right = '20px';
+    installButton.style.zIndex = '1000';
+    installButton.style.fontSize = '12px';
+    installButton.style.padding = '8px 12px';
+
+    document.body.appendChild(installButton);
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installButton.style.display = 'block';
+    });
+
+    installButton.addEventListener('click', async () => {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const { outcome } = await deferredPrompt.userChoice;
+            console.log(`User response to the install prompt: ${outcome}`);
+            deferredPrompt = null;
+            installButton.style.display = 'none';
+        }
+    });
+
+    // Скрываем кнопку если PWA уже установлено
+    window.addEventListener('appinstalled', () => {
+        installButton.style.display = 'none';
+    });
+}
+
+// Инициализация PWA
+document.addEventListener('DOMContentLoaded', initPWA);

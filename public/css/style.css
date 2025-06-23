@@ -19,6 +19,17 @@ body {
     padding: 0 20px;
 }
 
+/* CSS переменные для мобильных устройств */
+:root {
+    --vh: 1vh;
+}
+
+/* Исправление для iOS Safari 100vh проблема */
+.full-height {
+    height: 100vh;
+    height: calc(var(--vh, 1vh) * 100);
+}
+
 /* Глитч эффект для заголовков */
 .glitch-text {
     font-size: 3rem;
@@ -1916,106 +1927,337 @@ body {
 
 /* Адаптивность */
 @media (max-width: 768px) {
+    body {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
     .container {
         padding: 0 15px;
+        max-width: 100%;
     }
     
+    /* Заголовки */
     .glitch-text {
         font-size: 2rem;
-    }
-    
-    .nav-menu {
-        flex-wrap: wrap;
-        gap: 15px;
-    }
-    
-    .nav-link {
-        font-size: 0.8rem;
-        padding: 6px 10px;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 15px;
-    }
-    
-    .dashboard-sections {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .profile-layout {
-        grid-template-columns: 1fr;
-        gap: 30px;
-    }
-    
-    .fighter-card {
-        flex-direction: column;
+        letter-spacing: 1px;
         text-align: center;
     }
     
-    .fighter-stats {
-        justify-content: center;
+    h1 {
+        font-size: 1.8rem;
+        margin: 15px 0;
     }
     
-    .timeline-item {
-        flex-direction: column !important;
+    h2 {
+        font-size: 1.4rem;
+        margin: 12px 0;
     }
     
-    .timeline-content {
-        max-width: 100%;
-        text-align: center !important;
-        padding: 20px 0 !important;
+    h3 {
+        font-size: 1.2rem;
+        margin: 10px 0;
     }
     
-    .timeline::before {
-        left: 20px;
-    }
-    
-    .timeline-marker {
-        left: 20px;
-    }
-    
-    .fun-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .milestones {
-        grid-template-columns: 1fr;
-    }
-    
-    .legend-items {
+    /* Навигация */
+    .nav-links {
         flex-direction: column;
-        gap: 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    .form-main {
-        padding: 20px 0;
+        gap: 8px;
+        text-align: center;
     }
     
-    .form-container {
-        padding: 20px;
+    .nav-links a {
+        padding: 12px 15px;
+        font-size: 14px;
+        border-radius: 5px;
+        background: rgba(255, 68, 68, 0.1);
+        margin: 2px 0;
+    }
+    
+    /* Кнопки */
+    .btn {
+        width: 100%;
+        padding: 12px 15px;
+        font-size: 14px;
+        margin: 8px 0;
+        min-height: 48px; /* Для удобного нажатия */
+    }
+    
+    .action-buttons {
+        flex-direction: column;
+        gap: 10px;
     }
     
     .action-buttons .btn {
         display: block;
-        margin: 10px 0;
+        margin: 5px 0;
         text-align: center;
     }
     
+    /* Формы */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px; /* Предотвращает зум на iOS */
+        border-radius: 5px;
+    }
+    
+    .form-group textarea {
+        min-height: 120px;
+        resize: vertical;
+    }
+    
+    /* Карточки */
+    .card, .message-card, .user-card {
+        margin: 10px 0;
+        padding: 15px;
+        border-radius: 8px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .stat-card {
+        text-align: center;
+        padding: 20px 15px;
+    }
+    
+    /* Профиль */
     .profile-header {
         flex-direction: column;
         text-align: center;
-        gap: 20px;
+        gap: 15px;
+    }
+    
+    .profile-photo {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+    }
+    
+    .profile-info h2 {
+        font-size: 1.3rem;
     }
     
     .achievement-form {
         flex-direction: column;
+        gap: 10px;
+    }
+    
+    .achievement-form input {
+        margin-bottom: 10px;
+    }
+    
+    /* Чат/Журнал */
+    .message-form {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .message-form input {
+        margin-bottom: 10px;
+    }
+    
+    .message-card {
+        padding: 12px;
+        margin: 8px 0;
+    }
+    
+    .message-author {
+        font-size: 0.9rem;
+    }
+    
+    .message-time {
+        font-size: 0.8rem;
+    }
+    
+    /* Развлечения */
+    .fun-grid {
+        grid-template-columns: 1fr;
+        gap: 15px;
+    }
+    
+    .fun-card {
+        padding: 15px;
     }
     
     .cipher-buttons {
         flex-direction: column;
+        gap: 10px;
+    }
+    
+    .cipher-buttons .btn {
+        width: 100%;
+    }
+    
+    /* Генераторы */
+    .generator-result {
+        padding: 15px;
+        margin: 15px 0;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+    
+    #chaos-display {
+        text-align: center;
+        padding: 20px 10px;
+    }
+    
+    #chaos-number {
+        font-size: 2.5rem;
+        margin: 10px 0;
+    }
+    
+    /* Рейтинг */
+    .rating-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    
+    .rating-table table {
+        width: 100%;
+        min-width: 300px;
+    }
+    
+    .rating-table th,
+    .rating-table td {
+        padding: 8px 4px;
+        font-size: 12px;
+    }
+    
+    /* Хроника */
+    .timeline {
+        padding-left: 15px;
+    }
+    
+    .timeline-item {
+        padding: 12px;
+        margin: 10px 0;
+    }
+    
+    .timeline-item h4 {
+        font-size: 1rem;
+    }
+    
+    .timeline-item .date {
+        font-size: 0.8rem;
+    }
+    
+    /* Цитаты */
+    .quote-display {
+        padding: 20px 15px;
+        text-align: center;
+    }
+    
+    .quote-text {
+        font-size: 1rem;
+        line-height: 1.4;
+        margin-bottom: 15px;
+    }
+    
+    .quote-author {
+        font-size: 0.9rem;
+    }
+    
+    /* Исправления для очень маленьких экранов */
+    @media (max-width: 480px) {
+        .glitch-text {
+            font-size: 1.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            padding: 0 10px;
+        }
+        
+        .card, .message-card, .fun-card {
+            padding: 12px;
+        }
+        
+        .btn {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+        
+        .nav-links a {
+            padding: 10px 12px;
+            font-size: 13px;
+        }
+        
+        #chaos-number {
+            font-size: 2rem;
+        }
+        
+        .stats-grid .stat-card {
+            padding: 15px 10px;
+        }
+        
+        .profile-photo {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}
+
+/* Ландшафтная ориентация на мобильных */
+@media (max-width: 768px) and (orientation: landscape) {
+    .glitch-text {
+        font-size: 1.8rem;
+    }
+    
+    .nav-links {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Темы для темного режима (если пользователь предпочитает темную тему) */
+@media (prefers-color-scheme: dark) {
+    body {
+        background: linear-gradient(135deg, #000000 0%, #111111 100%);
+    }
+}
+
+/* Улучшения для сенсорных экранов */
+@media (hover: none) and (pointer: coarse) {
+    .btn:hover {
+        transform: none; /* Убираем hover эффекты на сенсорных экранах */
+    }
+    
+    .nav-links a:hover {
+        transform: none;
+    }
+    
+    /* Увеличиваем области нажатия */
+    .btn, .nav-links a, button {
+        min-height: 44px;
+        min-width: 44px;
+    }
+}
+
+/* Анимации только если пользователь не отключил их */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .glitch-text {
+        animation: none;
     }
 }
