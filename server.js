@@ -9,8 +9,17 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 // Загрузка переменных окружения
 require('dotenv').config();
 
+// Форсированно устанавливаем продакшн режим если запускается на Railway
+if (process.env.RAILWAY_ENVIRONMENT) {
+  process.env.NODE_ENV = 'production';
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+// Логирование режима работы
+console.log(`🔧 Режим работы: ${process.env.NODE_ENV || 'development'}`);
+console.log(`📡 Порт: ${PORT}`);
 
 // Настройка Gemini AI
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSyAoxCiJH3aEfrPyjdM8eL0RvV7_U0_8OoE');
@@ -429,8 +438,10 @@ initializeProject();
 app.listen(PORT, () => {
   console.log(`🥊 Проект Разгром запущен на порту ${PORT}`);
   if (process.env.NODE_ENV === 'production') {
-    console.log(`🌐 Сайт доступен в интернете!`);
+    console.log(`🌐 Сайт доступен по Railway URL`);
+    console.log(`✅ Продакшн режим активирован`);
   } else {
     console.log(`🌐 Открой браузер: http://localhost:${PORT}`);
+    console.log(`🔧 Режим разработки`);
   }
 });
