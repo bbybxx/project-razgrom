@@ -1,0 +1,40 @@
+<!-- Мобильная кнопка меню -->
+<button id="mobile-menu-toggle" class="mobile-menu-toggle">☰</button>
+
+<!-- Мобильный сайдбар -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+<nav id="mobile-sidebar" class="sidebar">
+    <div class="sidebar-header">
+        <h2 class="sidebar-logo">РАЗГРОМ</h2>
+        <p class="sidebar-subtitle">Первое правило - никому не рассказывать</p>
+    </div>
+    <div class="sidebar-nav">
+        <a href="/dashboard" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">🏠</span>ГЛАВНАЯ
+        </a>
+        <a href="/profile/<%= user.username %>" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">👤</span>ПРОФИЛЬ
+        </a>
+        <a href="/journal" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">💬</span>ОБЩИЙ ЧАТ
+        </a>
+        <a href="/rating" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">🏆</span>РЕЙТИНГ
+        </a>
+        <a href="/fun" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">🎮</span>РАЗВЛЕЧЕНИЯ
+        </a>
+        <a href="/chronicle" class="sidebar-nav-item">
+            <span class="sidebar-nav-icon">📚</span>ИСТОРИЯ
+        </a>
+    </div>
+    <div class="sidebar-user-info">
+        <p class="sidebar-username"><%= user.username %></p>
+        <% if (user.fightName) { %>
+            <p class="sidebar-role">aka "<%= user.fightName %>"</p>
+        <% } else { %>
+            <p class="sidebar-role">Новый боец</p>
+        <% } %>
+        <a href="/logout" class="sidebar-logout">ВЫХОД</a>
+    </div>
+</nav>

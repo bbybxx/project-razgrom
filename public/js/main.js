@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', function() {
     } else if (window.location.pathname === '/rating') {
         initRatingPage();
     }
+    
+    initMobileSidebar();
 });
 
 // Глитч эффекты
@@ -716,6 +718,66 @@ function initPWA() {
     // Скрываем кнопку если PWA уже установлено
     window.addEventListener('appinstalled', () => {
         installButton.style.display = 'none';
+    });
+}
+
+// Инициализация мобильного сайдбара
+function initMobileSidebar() {
+    const menuToggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.getElementById('mobile-sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    if (!menuToggle || !sidebar || !overlay) return;
+    
+    // Открытие сайдбара
+    menuToggle.addEventListener('click', function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Блокируем скролл
+    });
+    
+    // Закрытие сайдбара при клике на overlay
+    overlay.addEventListener('click', function() {
+        closeSidebar();
+    });
+    
+    // Закрытие сайдбара при swipe влево
+    let startX = 0;
+    sidebar.addEventListener('touchstart', function(e) {
+        startX = e.touches[0].clientX;
+    });
+    
+    sidebar.addEventListener('touchmove', function(e) {
+        const currentX = e.touches[0].clientX;
+        const diffX = startX - currentX;
+        
+        if (diffX > 50) { // Swipe влево
+            closeSidebar();
+        }
+    });
+    
+    // Закрытие при нажатии Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && sidebar.classList.contains('open')) {
+            closeSidebar();
+        }
+    });
+    
+    function closeSidebar() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('active');
+        document.body.style.overflow = ''; // Возвращаем скролл
+    }
+    
+    // Автозакрытие при клике на ссылку
+    const sidebarLinks = sidebar.querySelectorAll('a');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            // Небольшая задержка для плавности
+            setTimeout(() => {
+                closeSidebar();
+            }, 200);
+        });
     });
 }
 

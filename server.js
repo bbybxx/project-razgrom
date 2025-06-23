@@ -98,14 +98,28 @@ function initializeProject() {
   }
   if (!fs.existsSync('data/messages.json')) {
     writeJSONFile('data/messages.json', []);
-  }
-  if (!fs.existsSync('data/chronicle.json')) {
+  }  if (!fs.existsSync('data/chronicle.json')) {
     writeJSONFile('data/chronicle.json', [
       {
         id: 1,
         date: '2025-06-23',
         title: 'Начало Проекта Разгром',
-        description: 'Первый день нашего тайного сообщества'
+        description: 'Первый день нашего тайного сообщества. Система запущена и готова к работе.',
+        category: 'СИСТЕМА'
+      },
+      {
+        id: 2,
+        date: '2025-06-23',
+        title: 'Мобильная оптимизация',
+        description: 'Добавлен адаптивный дизайн и мобильный сайдбар для удобства использования.',
+        category: 'ОБНОВЛЕНИЕ'
+      },
+      {
+        id: 3,
+        date: '2025-06-23',
+        title: 'AI генераторы активированы',
+        description: 'Все генераторы теперь используют искусственный интеллект для создания уникального контента.',
+        category: 'ФУНКЦИЯ'
       }
     ]);
   }
