@@ -428,5 +428,9 @@ initializeProject();
 
 app.listen(PORT, () => {
   console.log(`🥊 Проект Разгром запущен на порту ${PORT}`);
-  console.log(`🌐 Открой браузер: http://localhost:${PORT}`);
+  if (process.env.NODE_ENV === 'production') {
+    console.log(`🌐 Сайт доступен в интернете!`);
+  } else {
+    console.log(`🌐 Открой браузер: http://localhost:${PORT}`);
+  }
 });
